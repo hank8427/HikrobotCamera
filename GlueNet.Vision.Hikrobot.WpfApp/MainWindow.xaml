@@ -45,7 +45,14 @@
             </StackPanel>
         </WrapPanel>
         <Border Background="LightGray">
-            <Image Source="{Binding BitmapSource}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding BitmapSource1}" Grid.Column="0"/>
+                <Image Source="{Binding BitmapSource2}" Grid.Column="1"/>
+            </Grid>
         </Border>
     </DockPanel>
 </Window>

@@ -42,11 +42,12 @@ namespace GlueNet.Vision.Hikrobot
 
         public event EventHandler<ICaptureCompletedArgs> CaptureCompleted;
 
-        public void InitCamera(CameraInfo cameraInfo, MyCamera.MV_CC_DEVICE_INFO_LIST deviceList)
+        public void InitCamera(CameraInfo cameraInfo)
         {
             CameraInfo = cameraInfo;
             MyCamera = new MyCamera();
-            OpenCamera(deviceList);
+            OpenCamera((IntPtr)cameraInfo.Raw);
+            SetSoftTriggerMode();
         }
       
 
@@ -324,7 +325,7 @@ namespace GlueNet.Vision.Hikrobot
                             if (TriggerMode == TriggerModes.SoftTrigger)
                             {
                                 var filename = $"{DateTime.Now:MMddyy_HHmmss}_test.bmp";
-                                Bitmap.Save(filename, ImageFormat.Bmp);
+                                //Bitmap.Save(filename, ImageFormat.Bmp);
                             }
                         }
                         catch (Exception ex)
@@ -339,20 +340,13 @@ namespace GlueNet.Vision.Hikrobot
             }
         }
 
-        public void OpenCamera(MyCamera.MV_CC_DEVICE_INFO_LIST deviceList)
+        public void OpenCamera(IntPtr raw)
         {
-            for (int i = 0; i < deviceList.nDeviceNum; i++)
-            {
-                MyCamera.MV_CC_DEVICE_INFO device = (MyCamera.MV_CC_DEVICE_INFO)Marshal.PtrToStructure(deviceList.pDeviceInfo[i], typeof(MyCamera.MV_CC_DEVICE_INFO));
+            //for (int i = 0; i < deviceList.nDeviceNum; i++)
+            //{
+                MyCamera.MV_CC_DEVICE_INFO device = (MyCamera.MV_CC_DEVICE_INFO)Marshal.PtrToStructure(raw, typeof(MyCamera.MV_CC_DEVICE_INFO));
 
-                if (null == MyCamera)
-                {
-                    MyCamera = new MyCamera();
-                    if (null == MyCamera)
-                    {
-                        return;
-                    }
-                }
+                MyCamera = new MyCamera();
 
                 int nRet = MyCamera.MV_CC_CreateDevice_NET(ref device);
                 if (nRet != MyCamera.MV_OK)
@@ -401,8 +395,9 @@ namespace GlueNet.Vision.Hikrobot
 
                 // ch:设置采集连续模式 | en:Set Continues Aquisition Mode
                 MyCamera.MV_CC_SetEnumValue_NET("AcquisitionMode", (uint)MyCamera.MV_CAM_ACQUISITION_MODE.MV_ACQ_MODE_CONTINUOUS);
-                nRet = MyCamera.MV_CC_SetEnumValue_NET("TriggerMode", (uint)MyCamera.MV_CAM_TRIGGER_MODE.MV_TRIGGER_MODE_OFF);
-            }
+                MyCamera.MV_CC_SetEnumValue_NET("TriggerMode", (uint)MyCamera.MV_CAM_TRIGGER_MODE.MV_TRIGGER_MODE_ON);
+                MyCamera.MV_CC_SetEnumValue_NET("TriggerSource", (uint)MyCamera.MV_CAM_TRIGGER_SOURCE.MV_TRIGGER_SOURCE_SOFTWARE);
+            //}
         }
     }
 }

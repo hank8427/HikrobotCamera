@@ -28,19 +28,19 @@ namespace GlueNet.Vision.Hikrobot
         public ICamera CreateCamera(CameraInfo cameraInfo)
         {
             var camera = new HikrobotCamera();
-            camera.InitCamera(cameraInfo, myDeviceList);
+            camera.InitCamera(cameraInfo);
             return camera;
         }
 
         public ICamera CreateCamera(string serial)
         {
-            var cameraInfos = EnumerateCameras().ToList();
-            var find = cameraInfos.FirstOrDefault(x => x.SerialNumber == serial);
+            //var cameraInfos = EnumerateCameras().ToList();
+            //var find = cameraInfos.FirstOrDefault(x => x.SerialNumber == serial);
 
-            if (find != null)
-            {
-                return CreateCamera(find);
-            }
+            //if (find != null)
+            //{
+            //    return CreateCamera(find);
+            //}
 
             throw new Exception($"Serial [{serial}] not found.");
         }
@@ -68,7 +68,7 @@ namespace GlueNet.Vision.Hikrobot
                         myCameraInfoList.Add(new CameraInfo(typeof(HikrobotCameraFactory).ToString()
                                                             , gigeInfo.chUserDefinedName
                                                             , gigeInfo.chSerialNumber
-                                                            , null));
+                                                            , myDeviceList.pDeviceInfo[i]));
                     }
                 }              
             }
