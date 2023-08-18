@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlueNet.Vision.Hikrobot.WpfApp", "GlueNet.Vision.Hikrobot.WpfApp\GlueNet.Vision.Hikrobot.WpfApp.csproj", "{CC198B22-91DB-4BC9-8EB5-FEEF13DB6A1A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ECDA92F7-72C8-4953-B967-692383A67A28} = {ECDA92F7-72C8-4953-B967-692383A67A28}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlueNet.Vision.Hikrobot", "GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot.csproj", "{ECDA92F7-72C8-4953-B967-692383A67A28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC198B22-91DB-4BC9-8EB5-FEEF13DB6A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC198B22-91DB-4BC9-8EB5-FEEF13DB6A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC198B22-91DB-4BC9-8EB5-FEEF13DB6A1A}.Debug|x64.ActiveCfg = Debug|x64
+		{CC198B22-91DB-4BC9-8EB5-FEEF13DB6A1A}.Debug|x64.Build.0 = Debug|x64
+		{CC198B22-91DB-4BC9-8EB5-FEEF13DB6A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC198B22-91DB-4BC9-8EB5-FEEF13DB6A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC198B22-91DB-4BC9-8EB5-FEEF13DB6A1A}.Release|x64.ActiveCfg = Release|x64
+		{CC198B22-91DB-4BC9-8EB5-FEEF13DB6A1A}.Release|x64.Build.0 = Release|x64
+		{ECDA92F7-72C8-4953-B967-692383A67A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECDA92F7-72C8-4953-B967-692383A67A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECDA92F7-72C8-4953-B967-692383A67A28}.Debug|x64.ActiveCfg = Debug|x64
+		{ECDA92F7-72C8-4953-B967-692383A67A28}.Debug|x64.Build.0 = Debug|x64
+		{ECDA92F7-72C8-4953-B967-692383A67A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECDA92F7-72C8-4953-B967-692383A67A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECDA92F7-72C8-4953-B967-692383A67A28}.Release|x64.ActiveCfg = Release|x64
+		{ECDA92F7-72C8-4953-B967-692383A67A28}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2FC9D315-0680-4BBC-8616-09F3EE49DC01}
+	EndGlobalSection
+EndGlobal

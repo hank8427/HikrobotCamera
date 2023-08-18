@@ -1,0 +1,51 @@
+﻿<Window x:Class="GlueNet.Vision.Hikrobot.WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlueNet.Vision.Hikrobot.WpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Closing="Window_Closing">
+    <DockPanel>
+        <WrapPanel Width="300" DockPanel.Dock="Left">
+            <WrapPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Height" Value="42"></Setter>
+                    <Setter Property="Width" Value="120"></Setter>
+                </Style>
+            </WrapPanel.Resources>
+            <StackPanel Width="150">
+                <RadioButton VerticalAlignment="Center" Checked="ContinuousMode_Checked" IsChecked="{Binding IsContinuous}" Content="Continuous Mode"  Margin="10"/>
+                <RadioButton VerticalAlignment="Center" Checked="TriggerMode_Checked" IsChecked="{Binding IsSoftTrigger}" Content="SoftTrigger Mode" Margin="10"/>
+                <WrapPanel Margin="5" Visibility="Collapsed">
+                    <TextBlock Text="Exposure"/>
+                    <TextBox Width="50" Margin="20,0,0,0" />
+                </WrapPanel>
+                <WrapPanel Margin="10">
+                    <TextBlock Text="Gain"/>
+                    <TextBox  Text="{Binding Gain}" Width="50" Margin="45,0,0,0" />
+                </WrapPanel>
+                <WrapPanel Margin="5" Visibility="Collapsed">
+                    <TextBlock Text="Frame rate"/>
+                    <TextBox  Width="50" Margin="10,0,0,0"/>
+                </WrapPanel>
+                <StackPanel>
+                    <Button Content="Get Parameters" Click="GetParmOnClick" Margin="5"/>
+                    <Button Content="Set Parameters" Click="SetParmOnClick" Margin="5"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel>
+                <Button Content="Start Play" Click="StartPlayOnClick" Margin="10" />
+                <Button Content="Stop Play" Click="StopPlayOnClick" Margin="10"/>
+                <Button Content="Capture" Click="CaptureOnClick" Margin="10"/>
+                <Button Content="Close Camera" Click="CloseCameraOnClick" Margin="10"/>
+                <Button Content="Open Camera" Click="OpenCameraOnClick" Margin="10"/>
+            </StackPanel>
+        </WrapPanel>
+        <Border Background="LightGray">
+            <Image Source="{Binding BitmapSource}"/>
+        </Border>
+    </DockPanel>
+</Window>
