@@ -16,6 +16,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Windows.Media.Media3D;
 using System.Data.SqlClient;
 using static MvCamCtrl.NET.MyCamera;
+using System.IO.Packaging;
 
 namespace GlueNet.Vision.Hikrobot
 {
@@ -46,8 +47,10 @@ namespace GlueNet.Vision.Hikrobot
         {
             CameraInfo = cameraInfo;
             MyCamera = myCamera;
-            OpenCamera((IntPtr)cameraInfo.Raw);
+            OpenCamera((IntPtr)cameraInfo.Raw);          
             SetSoftTriggerMode();
+
+            //int nRet = MyCamera.MV_CC_SetBoolValue_NET("ReverseX", false);
         }
       
 
@@ -110,7 +113,6 @@ namespace GlueNet.Vision.Hikrobot
             myCancelTokenSource.Dispose();
             myCancelTokenSource = new CancellationTokenSource();
             Task Task1 = Task.Run(ReceiveThreadProcess2, myCancelTokenSource.Token);
-
 
             // ch:开始采集 | en:Start Grabbing
             nRet = MyCamera.MV_CC_StartGrabbing_NET();
@@ -246,6 +248,24 @@ namespace GlueNet.Vision.Hikrobot
             }
         }
 
+        public void RotateImage(MyCamera.MV_FRAME_OUT stFrameInfo, MV_IMG_ROTATION_ANGLE rotateAngle)
+        {
+            MyCamera.MV_CC_ROTATE_IMAGE_PARAM rotateImageInfo = new MyCamera.MV_CC_ROTATE_IMAGE_PARAM();
+
+            rotateImageInfo.enPixelType = stFrameInfo.stFrameInfo.enPixelType;
+            rotateImageInfo.nWidth = stFrameInfo.stFrameInfo.nWidth;
+            rotateImageInfo.nHeight = stFrameInfo.stFrameInfo.nHeight;
+            rotateImageInfo.pSrcData = stFrameInfo.pBufAddr;
+            rotateImageInfo.nSrcDataLen = stFrameInfo.stFrameInfo.nFrameLen;
+            rotateImageInfo.pDstBuf = myConvertDstBuf;
+            rotateImageInfo.nDstBufLen = 0;
+            rotateImageInfo.nDstBufSize = myNConvertDstBufLen;
+            rotateImageInfo.enRotationAngle = rotateAngle;
+
+            int success = MyCamera.MV_CC_RotateImage_NET(ref rotateImageInfo);
+            Console.WriteLine(success);          
+        }
+
         public void ReceiveThreadProcess2()
         {
             MyCamera.MV_FRAME_OUT stFrameInfo = new MyCamera.MV_FRAME_OUT();
@@ -295,13 +315,15 @@ namespace GlueNet.Vision.Hikrobot
                         if (PixelFormat.Format8bppIndexed == Bitmap.PixelFormat)
                         {
                             stConvertInfo.enDstPixelType = MyCamera.MvGvspPixelType.PixelType_Gvsp_Mono8;
-                            MyCamera.MV_CC_ConvertPixelType_NET(ref stConvertInfo);
+                            int a = MyCamera.MV_CC_ConvertPixelType_NET(ref stConvertInfo);
                         }
                         else
                         {
                             stConvertInfo.enDstPixelType = MyCamera.MvGvspPixelType.PixelType_Gvsp_BGR8_Packed;
-                            MyCamera.MV_CC_ConvertPixelType_NET(ref stConvertInfo);
+                            int a = MyCamera.MV_CC_ConvertPixelType_NET(ref stConvertInfo);
                         }
+
+                        RotateImage(stFrameInfo, MV_IMG_ROTATION_ANGLE.MV_IMAGE_ROTATE_180);
 
                         try
                         {
@@ -341,7 +363,7 @@ namespace GlueNet.Vision.Hikrobot
             //for (int i = 0; i < deviceList.nDeviceNum; i++)
             //{
                 MyCamera.MV_CC_DEVICE_INFO device = (MyCamera.MV_CC_DEVICE_INFO)Marshal.PtrToStructure(raw, typeof(MyCamera.MV_CC_DEVICE_INFO));
-
+                MyCamera.MV_CC_FLIP_IMAGE_PARAM flip = (MyCamera.MV_CC_FLIP_IMAGE_PARAM)Marshal.PtrToStructure(raw, typeof(MyCamera.MV_CC_FLIP_IMAGE_PARAM));
                 MyCamera = new MyCamera();
 
                 int nRet = MyCamera.MV_CC_CreateDevice_NET(ref device);

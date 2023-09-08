@@ -42,10 +42,10 @@ namespace GlueNet.Vision.Hikrobot.WpfApp
             if (cameraInfos.Count != 0)
             {
                 HikrobotCamera1 = factory.CreateCamera(cameraInfos[0]);
-                HikrobotCamera2 = factory.CreateCamera(cameraInfos[1]);
+                //HikrobotCamera2 = factory.CreateCamera(cameraInfos[1]);
 
                 HikrobotCamera1.CaptureCompleted += HikrobotCamera1_CaptureCompleted;
-                HikrobotCamera2.CaptureCompleted += HikrobotCamera2_CaptureCompleted;
+                //HikrobotCamera2.CaptureCompleted += HikrobotCamera2_CaptureCompleted;
                 this.Closing += Window_Closing;
                 InitializeComponent();
                 Gain = HikrobotCamera1.GetGain();
@@ -108,7 +108,7 @@ namespace GlueNet.Vision.Hikrobot.WpfApp
         {
             HikrobotCamera1.SoftTrigger();
             Task.Delay(500).Wait();
-            HikrobotCamera2.SoftTrigger();
+            //HikrobotCamera2.SoftTrigger();
         }
 
         private void GetParmOnClick(object sender, RoutedEventArgs e)
@@ -135,7 +135,7 @@ namespace GlueNet.Vision.Hikrobot.WpfApp
 
         private void StartPlayOnClick(object sender, RoutedEventArgs e)
         {
-            HikrobotCamera2.StartPlay();
+            //HikrobotCamera2.StartPlay();
             HikrobotCamera1.StartPlay();         
         }
 
