@@ -28,7 +28,7 @@ namespace GlueNet.Vision.Hikrobot
         public ICamera CreateCamera(CameraInfo cameraInfo)
         {
             var camera = new HikrobotCamera();
-            camera.InitCamera(cameraInfo);
+            camera.InitCamera(new MyCamera(),cameraInfo);
             return camera;
         }
 

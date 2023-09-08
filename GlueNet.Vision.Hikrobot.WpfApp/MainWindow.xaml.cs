@@ -136,7 +136,6 @@ namespace GlueNet.Vision.Hikrobot.WpfApp
         private void StartPlayOnClick(object sender, RoutedEventArgs e)
         {
             HikrobotCamera2.StartPlay();
-            Task.Delay(500).Wait();
             HikrobotCamera1.StartPlay();         
         }
 

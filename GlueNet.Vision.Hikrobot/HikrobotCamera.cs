@@ -34,7 +34,7 @@ namespace GlueNet.Vision.Hikrobot
         public MyCamera.MV_FRAME_OUT_INFO_EX FrameInfo = new MyCamera.MV_FRAME_OUT_INFO_EX();
         public CameraInfo CameraInfo { get; private set; }
         public TriggerModes TriggerMode { get; set; }
-        public static MyCamera MyCamera { get; set; }
+        public MyCamera MyCamera { get; set; }
         public bool IsPlaying { get; set; }
 
         [DllImport("kernel32.dll", EntryPoint = "CopyMemory", SetLastError = false)]
@@ -42,10 +42,10 @@ namespace GlueNet.Vision.Hikrobot
 
         public event EventHandler<ICaptureCompletedArgs> CaptureCompleted;
 
-        public void InitCamera(CameraInfo cameraInfo)
+        public void InitCamera(MyCamera myCamera, CameraInfo cameraInfo)
         {
             CameraInfo = cameraInfo;
-            MyCamera = new MyCamera();
+            MyCamera = myCamera;
             OpenCamera((IntPtr)cameraInfo.Raw);
             SetSoftTriggerMode();
         }
@@ -125,11 +125,7 @@ namespace GlueNet.Vision.Hikrobot
         public void StopPlay()
         {
             myCancelTokenSource.Cancel();
-            int nRet = MyCamera.MV_CC_StopGrabbing_NET();
-            if (nRet != MyCamera.MV_OK)
-            {
-                MessageBox.Show("Stop Grabbing Fail!");
-            }
+            MyCamera.MV_CC_StopGrabbing_NET();
         }
 
         private Int32 NecessaryOperBeforeGrab()
