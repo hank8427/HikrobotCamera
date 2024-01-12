@@ -47,12 +47,12 @@ namespace GlueNet.Vision.Hikrobot
         {
             CameraInfo = cameraInfo;
             MyCamera = myCamera;
-            OpenCamera((IntPtr)cameraInfo.Raw);          
+            OpenCamera((IntPtr)cameraInfo.Raw).Wait();    
             SetSoftTriggerMode();
 
             //int nRet = MyCamera.MV_CC_SetBoolValue_NET("ReverseX", false);
         }
-      
+
 
         public void Dispose()
         {
@@ -224,6 +224,7 @@ namespace GlueNet.Vision.Hikrobot
                 Bitmap.Palette = palette;
             }
 
+            
             return MyCamera.MV_OK;
         }
 
@@ -263,7 +264,7 @@ namespace GlueNet.Vision.Hikrobot
             rotateImageInfo.enRotationAngle = rotateAngle;
 
             int success = MyCamera.MV_CC_RotateImage_NET(ref rotateImageInfo);
-            Console.WriteLine(success);          
+            //Console.WriteLine(success);          
         }
 
         public void ReceiveThreadProcess2()
@@ -276,7 +277,7 @@ namespace GlueNet.Vision.Hikrobot
 
             while (myCancelTokenSource.Token.IsCancellationRequested == false)
             {
-                Console.WriteLine($"ThreadId:{Thread.CurrentThread.ManagedThreadId} , {DateTime.Now.ToString("hh:mm:ss.fff")}");
+                //Console.WriteLine($"ThreadId:{Thread.CurrentThread.ManagedThreadId} , {DateTime.Now.ToString("hh:mm:ss.fff")}");
 
                 nRet = MyCamera.MV_CC_GetImageBuffer_NET(ref stFrameInfo, 2500);
                 if (nRet == MyCamera.MV_OK)
@@ -284,7 +285,7 @@ namespace GlueNet.Vision.Hikrobot
 
                     lock (myBufForDriverLock)
                     {
-                        Console.WriteLine("MV_CC_GetImageBuffer_NET");
+                        //Console.WriteLine("MV_CC_GetImageBuffer_NET");
                         if (myBufForDriver == IntPtr.Zero || stFrameInfo.stFrameInfo.nFrameLen > myNBufSizeForDriver)
                         {
                             if (myBufForDriver != IntPtr.Zero)
@@ -358,7 +359,7 @@ namespace GlueNet.Vision.Hikrobot
             }
         }
 
-        public void OpenCamera(IntPtr raw)
+        public Task OpenCamera(IntPtr raw)
         {
             //for (int i = 0; i < deviceList.nDeviceNum; i++)
             //{
@@ -369,7 +370,7 @@ namespace GlueNet.Vision.Hikrobot
                 int nRet = MyCamera.MV_CC_CreateDevice_NET(ref device);
                 if (nRet != MyCamera.MV_OK)
                 {
-                    return;
+                    return Task.CompletedTask;
                 }
 
                 var connected = MyCamera.MV_CC_IsDeviceConnected_NET();
@@ -381,16 +382,22 @@ namespace GlueNet.Vision.Hikrobot
                         myCancelTokenSource.Cancel();
                         MyCamera.MV_CC_DestroyDevice_NET();
                         MessageBox.Show("Device open failed!");
-                        return;
-                    }
+                        return Task.CompletedTask;
+                }
 
                     var timeout = 500;
                     nRet = MyCamera.MV_CC_SetIntValueEx_NET("GevHeartbeatTimeout", timeout);
                     if (nRet != MyCamera.MV_OK)
                     {
                         MessageBox.Show("Set HeartbeatTimeout failed!");
-                        return;
+                        return Task.CompletedTask;
                     }
+                }
+
+                nRet = MyCamera.MV_CC_FeatureLoad_NET("C:\\Glue\\CameraFile.mfs");
+                if (MyCamera.MV_OK != nRet)
+                {
+                    Console.WriteLine("FeatureLoad failed!");
                 }
 
 
@@ -415,6 +422,8 @@ namespace GlueNet.Vision.Hikrobot
                 MyCamera.MV_CC_SetEnumValue_NET("AcquisitionMode", (uint)MyCamera.MV_CAM_ACQUISITION_MODE.MV_ACQ_MODE_CONTINUOUS);
                 MyCamera.MV_CC_SetEnumValue_NET("TriggerMode", (uint)MyCamera.MV_CAM_TRIGGER_MODE.MV_TRIGGER_MODE_ON);
                 MyCamera.MV_CC_SetEnumValue_NET("TriggerSource", (uint)MyCamera.MV_CAM_TRIGGER_SOURCE.MV_TRIGGER_SOURCE_SOFTWARE);
+
+                return Task.CompletedTask;
             //}
         }
     }

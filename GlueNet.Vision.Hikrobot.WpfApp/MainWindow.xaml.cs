@@ -107,7 +107,7 @@ namespace GlueNet.Vision.Hikrobot.WpfApp
         private void CaptureOnClick(object sender, RoutedEventArgs e)
         {
             HikrobotCamera1.SoftTrigger();
-            Task.Delay(500).Wait();
+            //Task.Delay(500).Wait();
             //HikrobotCamera2.SoftTrigger();
         }
 

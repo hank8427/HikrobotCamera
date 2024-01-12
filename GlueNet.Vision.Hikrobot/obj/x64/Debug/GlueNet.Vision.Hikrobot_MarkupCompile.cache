@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\專案管理\GlueNetProjects\GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot\obj\x64\Debug\
+A:\GlueNetProjects\GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot\obj\x64\Debug\
 GlueNet.Vision.Hikrobot
 none
 false
@@ -12,9 +12,9 @@ DEBUG;TRACE
 
 1509281679
 
-81681395403
-126-137044245
+7-44048084
+126-2048618
 App.xaml;
 
-True
+False
 
