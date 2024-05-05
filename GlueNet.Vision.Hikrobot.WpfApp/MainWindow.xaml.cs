@@ -101,7 +101,7 @@ namespace GlueNet.Vision.Hikrobot.WpfApp
         private void StopPlayOnClick(object sender, RoutedEventArgs e)
         {
             HikrobotCamera1.StopPlay();
-            HikrobotCamera2.StopPlay();
+            //HikrobotCamera2.StopPlay();
         }
 
         private void CaptureOnClick(object sender, RoutedEventArgs e)

@@ -49,6 +49,7 @@ namespace GlueNet.Vision.Hikrobot
             MyCamera = myCamera;
             OpenCamera((IntPtr)cameraInfo.Raw).Wait();    
             SetSoftTriggerMode();
+            //SetContinuousMode();
 
             //int nRet = MyCamera.MV_CC_SetBoolValue_NET("ReverseX", false);
         }
@@ -330,22 +331,22 @@ namespace GlueNet.Vision.Hikrobot
                         {
                             // Save Bitmap Data
                             BitmapData bitmapData = Bitmap.LockBits(new Rectangle(0, 0, stConvertInfo.nWidth, stConvertInfo.nHeight), ImageLockMode.ReadWrite, Bitmap.PixelFormat);
+                            
                             CopyMemory(bitmapData.Scan0, stConvertInfo.pDstBuffer, (UInt32)(bitmapData.Stride * Bitmap.Height));
 
-
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                var args = new HikrobotCaptureCompletedArgs(Bitmap);
-                                CaptureCompleted?.Invoke(this, args);
-                            });
-                          
                             Bitmap.UnlockBits(bitmapData);
+                            
+                            var args = new HikrobotCaptureCompletedArgs(new Bitmap(Bitmap));
+                            
+                            CaptureCompleted?.Invoke(this, args);
+                          
+                            //Bitmap.Dispose();
 
-                            if (TriggerMode == TriggerModes.SoftTrigger)
-                            {
-                                var filename = $"{DateTime.Now:MMddyy_HHmmss}_test.bmp";
+                            //if (TriggerMode == TriggerModes.SoftTrigger)
+                            //{
+                            //    var filename = $"{DateTime.Now:MMddyy_HHmmss}_test.bmp";
                                 //Bitmap.Save(filename, ImageFormat.Bmp);
-                            }
+                            //}
                         }
                         catch (Exception ex)
                         {

@@ -89,6 +89,6 @@ A:\GlueNetProjects\GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot.WpfApp\obj\x6
 A:\GlueNetProjects\GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot.WpfApp\obj\x64\Debug\GlueNet.Vision.Hikrobot.WpfApp.csproj.GenerateResource.cache
 A:\GlueNetProjects\GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot.WpfApp\obj\x64\Debug\GlueNet.Vision.Hikrobot.WpfApp.csproj.CoreCompileInputs.cache
 A:\GlueNetProjects\GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot.WpfApp\obj\x64\Debug\GlueNet.Vision.Hikrobot.WpfApp.csproj.Fody.CopyLocal.cache
-A:\GlueNetProjects\GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot.WpfApp\obj\x64\Debug\GlueNet.Vision.Hikrobot.WpfApp.csproj.CopyComplete
 A:\GlueNetProjects\GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot.WpfApp\obj\x64\Debug\GlueNet.Vision.Hikrobot.WpfApp.exe
 A:\GlueNetProjects\GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot.WpfApp\obj\x64\Debug\GlueNet.Vision.Hikrobot.WpfApp.pdb
+A:\GlueNetProjects\GlueNet.Vision.Hikrobot\GlueNet.Vision.Hikrobot.WpfApp\obj\x64\Debug\GlueNet..7BC501B1.Up2Date
