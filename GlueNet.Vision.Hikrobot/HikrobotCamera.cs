@@ -395,7 +395,7 @@ namespace GlueNet.Vision.Hikrobot
                     }
                 }
 
-                nRet = MyCamera.MV_CC_FeatureLoad_NET("C:\\Glue\\CameraFile.mfs");
+                nRet = MyCamera.MV_CC_FeatureLoad_NET("..\\CameraFile.mfs");
                 if (MyCamera.MV_OK != nRet)
                 {
                     Console.WriteLine("FeatureLoad failed!");
